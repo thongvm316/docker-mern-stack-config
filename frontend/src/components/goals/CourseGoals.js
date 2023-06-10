@@ -1,14 +1,16 @@
-import React from 'react';
+import React from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
-import './CourseGoals.css';
-import Card from '../UI/Card';
-import GoalItem from './GoalItem';
+import './CourseGoals.css'
+import Card from '../UI/Card'
+import GoalItem from './GoalItem'
 
 function CourseGoals(props) {
-  const hasNoGoals = !props.goals || props.goals.length === 0;
+  const hasNoGoals = !props.goals || props.goals.length === 0
 
   return (
     <section id='course-goals'>
+      <h1>{uuidv4()}</h1>
       <Card>
         {hasNoGoals && <h2>No goals found. Start adding some!</h2>}
         <ul>
@@ -23,7 +25,7 @@ function CourseGoals(props) {
         </ul>
       </Card>
     </section>
-  );
+  )
 }
 
-export default CourseGoals;
+export default CourseGoals

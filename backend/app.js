@@ -5,6 +5,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const { v4: uuidv4 } = require('uuid')
 
 const Goal = require('./models/goal')
 
@@ -27,7 +28,8 @@ app.use((req, res, next) => {
 })
 
 app.get('/goals', async (req, res) => {
-  console.log('TRYING TO FETCH GOALS!!12312311')
+  console.log('TRYING TO FETCH GOALS!!')
+  console.log(uuidv4())
   try {
     const goals = await Goal.find()
     res.status(200).json({
@@ -97,7 +99,7 @@ mongoose.connect(
       console.error('FAILED TO CONNECT TO MONGODB')
       console.error(err)
     } else {
-      console.log('CONNECTED TO MONGODB!!')
+      console.log('CONNECTED TO MONGODB!')
       app.listen(80)
     }
   },

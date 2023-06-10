@@ -2,10 +2,43 @@ version: "3.8"
 services:
   mongodb:
     image: 'mongo'
+    # container_name: mongodb // can set manual when create container
     volumes:
       - data:/data/db
     env_file:
       - ./env/mongo.env
 
+  backend:
+    build: ./backend
+    # build: // there are two way to use build
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    #   dockerfile: Dockerfile-dev, Dockerfile-qa // can replace file name and use like this 
+    #   args:
+    #     some-arg:1 // use like ARG in Dockerfile
+    ports:
+      - '80:80'
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app
+      - /app/node_modules
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend/src:/app/src
+    stdin_open: true
+    tty: true
+    # like --it
+    depends_on:
+      - backend
+
 volumes:
   data:
+  logs:
